@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Dictionary" >
+
+    <Spinner
+        android:id="@+id/letter"
+        android:spinnerMode="dropdown"
+        android:background="#55a6a6a6"
+        android:layout_alignBottom="@+id/rgDictionary"
+        android:layout_width="60dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:entries="@array/alphabet"
+        android:prompt="@string/prompt"
+        android:textColor="@android:color/white" />
+
+    <RadioGroup
+        android:id="@+id/rgDictionary"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/letter"
+        android:textColor="@android:color/white" >
+
+        <RadioButton
+            android:id="@+id/dictionaryDovahzul"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Dovahzul-English"
+            android:textColor="@android:color/white" />
+
+        <RadioButton
+            android:id="@+id/dictionaruEnglish"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="English-Dovahzul"
+            android:textColor="@android:color/white" />
+    </RadioGroup>
+
+    <ListView
+        android:id="@+id/dictionaryList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/letter"
+        android:background="@drawable/splash"
+        android:cacheColorHint="#00000000"
+        android:orientation="vertical" >
+    </ListView>
+
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/splash"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+	android:screenOrientation="portrait"
+	tools:context=".MainMenu">
+
+	<TextView
+		android:id="@+id/tvmThuum"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:gravity="center_horizontal"
+		android:text="Dovahzul Dictionary"
+		android:textColor="@android:color/white"
+		android:textSize="50dip"/>
+	
+	<Button 
+	    android:id="@+id/bmAlphabet"
+	    android:layout_width="fill_parent"
+	    android:layout_height="40dip"
+	    android:layout_centerHorizontal="true"
+		android:layout_margin="2dip"
+		android:background="#55a6a6a6"
+		android:text="Alphabet"
+		android:textColor="@android:color/white"
+		android:layout_alignParentBottom="true"/>
+	
+	<Button
+		android:id="@+id/bmTranslator"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:layout_centerHorizontal="true"
+		android:layout_margin="2dip"
+		android:background="#55a6a6a6"
+		android:text="Translator"
+		android:textColor="@android:color/white"
+		android:layout_above="@id/bmAlphabet"/>
+
+	<Button
+		android:id="@+id/bmDictionary"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:layout_margin="2dip"
+		android:background="#55a6a6a6"
+		android:text="Dictionary"
+		android:textColor="@android:color/white"
+		android:layout_above="@id/bmTranslator"/>
+
+	<Button
+		android:id="@+id/bmSearch"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:layout_above="@id/bmDictionary"
+		android:layout_centerHorizontal="true"
+		android:layout_margin="2dip"
+		android:background="#55a6a6a6"
+		android:text="Search"
+		android:textColor="@android:color/white"/>
+
+</RelativeLayout>
+

@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.fernandezgodinho.pedro.dovahzuldictionary"
+    android:installLocation="preferExternal"
+    android:versionCode="4"
+    android:versionName="2.1.0" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.SearchList"
+            android:label="Search" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.Search"
+            android:label="Search" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.Word"
+            android:label="Word" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.Dictionary"
+            android:label="Dictionary" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.MainMenu"
+            android:label="Dovahzul Dictionary" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.Translator"
+            android:label="Translator" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.SearchMain"
+            android:label="Search" >
+        </activity>
+        <activity
+            android:name="net.fernandezgodinho.pedro.dovahzuldictionary.Alphabet"
+            android:label="@string/title_activity_alphabet" >
+        </activity>
+    </application>
+
+</manifest>
