@@ -15,7 +15,7 @@
         android:focusable="false"
         android:gravity="center_vertical"
         android:textColor="@android:color/white"
-        android:textSize="24dip" />
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,7 +32,7 @@
             android:focusable="false"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
-            android:textSize="12dip"
+            android:textSize="12sp"
             android:textStyle="italic" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:focusable="false"
             android:gravity="top"
             android:textColor="@android:color/white"
-            android:textSize="17dip" />
+            android:textSize="17sp" />
     </LinearLayout>
 
     <TextView
@@ -54,6 +54,6 @@
         android:focusable="false"
         android:gravity="center_vertical"
         android:textColor="@android:color/white"
-        android:textSize="13dip" />
+        android:textSize="13sp" />
 
 </LinearLayout>

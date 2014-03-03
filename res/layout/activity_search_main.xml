@@ -47,6 +47,7 @@
         android:singleLine="true" />
 
     <requestFocus />
+    
 
     <Button
         android:id="@+id/search"
@@ -66,6 +67,6 @@
         android:layout_below="@+id/tvSearch"
         android:text="Only display exact matches?"
         android:textColor="@android:color/white"
-        android:textSize="14dip" />
+        android:textSize="14sp" />
 
 </RelativeLayout>

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="DOV4"
         android:textColor="@android:color/white"
-        android:textSize="32dip" />
+        android:textSize="32sp" />
 
     <TextView
         android:id="@+id/tvNotes"
@@ -43,7 +43,7 @@
         android:layout_below="@+id/tvDovahzulAlpha"
         android:text="Dovah"
         android:textColor="@android:color/white"
-        android:textSize="30dip" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/tvCanon"
