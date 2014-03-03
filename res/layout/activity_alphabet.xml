@@ -11,80 +11,82 @@
     android:screenOrientation="portrait"
     tools:context=".Alphabet" >
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/aKeyPoints"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/aKeyPointsTitle"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="wrap_content"
+            android:layout_margin="2dip"
+            android:text="Key Points:"
+            android:textColor="@android:color/white"
+            android:textSize="16dip"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/aKeyPoints"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border" >
+        <TextView
+            android:id="@+id/aKeyTextOne"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aKeyPointsTitle"
+            android:layout_marginBottom="2dip"
+            android:layout_marginLeft="10dip"
+            android:text="Dovahzul has a 34-rune alphabet with no upper or lower case."
+            android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/aKeyPointsTitle"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:text="Key Points:"
-                    android:textColor="@android:color/white"
-                    android:textSize="16dip"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/aKeyTextTwo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aKeyTextOne"
+            android:layout_marginBottom="2dip"
+            android:layout_marginLeft="10dip"
+            android:text="There are unique letters for aa, ah, ei, ey, ii, ir, oo, uu, and ur."
+            android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/aKeyTextOne"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/aKeyPointsTitle"
-                    android:layout_marginBottom="2dip"
-                    android:layout_marginLeft="10dip"
-                    android:text="Dovahzul has a 34-rune alphabet with no upper or lower case."
-                    android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/aKeyTextThree"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aKeyTextTwo"
+            android:layout_marginLeft="10dip"
+            android:text="Apostrophes can be pronounced as one syllable or two."
+            android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/aKeyTextTwo"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/aKeyTextOne"
-                    android:layout_marginBottom="2dip"
-                    android:layout_marginLeft="10dip"
-                    android:text="There are unique letters for aa, ah, ei, ey, ii, ir, oo, uu, and ur."
-                    android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/aKeyTextFour"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aKeyTextThree"
+            android:layout_marginLeft="10dip"
+            android:text="Dovahzul does not have a letter equivalent to C. Instead, either S or K are used to produce the same sound. When transliterating a name that uses ch, the spelling tsh can be used instead."
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/aKeyTextThree"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/aKeyTextTwo"
-                    android:layout_marginLeft="10dip"
-                    android:text="Apostrophes can be pronounced as one syllable or two."
-                    android:textColor="@android:color/white" />
+    <TextView
+        android:id="@+id/aAlphabetTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aKeyPoints"
+        android:layout_margin="4dip"
+        android:text="Alphabet:"
+        android:textColor="@android:color/white"
+        android:textSize="20dip"
+        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/aKeyTextFour"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/aKeyTextThree"
-                    android:layout_marginLeft="10dip"
-                    android:text="Dovahzul does not have a letter equivalent to C. Instead, either S or K are used to produce the same sound. When transliterating a name that uses ch, the spelling tsh can be used instead."
-                    android:textColor="@android:color/white" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/aAlphabetTitle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/aKeyPoints"
-                android:layout_margin="2dip"
-                android:text="Alphabet"
-                android:textColor="@android:color/white"
-                android:textSize="16dip"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </ScrollView>
+    <ListView
+        android:id="@+id/aList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/aAlphabetTitle"
+        android:cacheColorHint="#00000000"
+        android:divider="#55a6a6a6"
+        android:dividerHeight="1dip"
+        android:orientation="vertical" >
+    </ListView>
 
 </RelativeLayout>
