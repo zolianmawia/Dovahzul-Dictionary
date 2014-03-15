@@ -4,10 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.URL;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
@@ -17,6 +18,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -65,41 +67,72 @@ public class MainMenu extends Portrait {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (dovahzulFile.exists() && englishFile.exists() && classFile.exists()
-				&& notesFile.exists() && canonFile.exists()) {
-			try {
-				is = new FileInputStream(englishFile);
-			} catch (FileNotFoundException e) {
-			}
-			english = convertStreamToString(is);
+
+		if (getBaseContext().getFileStreamPath("wordClass").exists()
+				&& getBaseContext().getFileStreamPath("english").exists()
+				&& getBaseContext().getFileStreamPath("dovahzul").exists()
+				&& getBaseContext().getFileStreamPath("notes").exists()
+				&& getBaseContext().getFileStreamPath("canon").exists()) {
+			System.out.println("DOES EXIST");
 
 			try {
-				is2 = new FileInputStream(dovahzulFile);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			dovahzul = convertStreamToString(is2);
+				FileInputStream fis;
 
-			try {
-				is3 = new FileInputStream(classFile);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			wordClass = convertStreamToString(is3);
+				byte[] buffer;
+				StringBuffer fileContent;
 
-			try {
-				is4 = new FileInputStream(notesFile);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			notes = convertStreamToString(is4);
+				fis = openFileInput("wordClass");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				wordClass = fileContent.toString();
 
-			try {
-				is5 = new FileInputStream(canonFile);
-			} catch (FileNotFoundException e) {
+				fis = openFileInput("english");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				english = fileContent.toString();
+
+				fis = openFileInput("dovahzul");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				dovahzul = fileContent.toString();
+
+				fis = openFileInput("wordClass");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				wordClass = fileContent.toString();
+
+				fis = openFileInput("notes");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				notes = fileContent.toString();
+
+				fis = openFileInput("canon");
+				buffer = new byte[1024];
+				fileContent = new StringBuffer("");
+				while (fis.read(buffer) != -1) {
+					fileContent.append(new String(buffer));
+				}
+				canon = fileContent.toString();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			canon = convertStreamToString(is5);
 
 			wordClassArray = wordClass.split("\\;");
 			englishArray = english.split("\\;");
@@ -107,6 +140,7 @@ public class MainMenu extends Portrait {
 			notesArray = notes.split("\\@");
 			canonArray = canon.split("\\;");
 		} else {
+			System.out.println("DOES NOT EXIST");
 			is = getResources().openRawResource(R.raw.english);
 			english = convertStreamToString(is);
 
@@ -121,6 +155,27 @@ public class MainMenu extends Portrait {
 
 			is5 = getResources().openRawResource(R.raw.canon);
 			canon = convertStreamToString(is5);
+
+			try {
+				FileOutputStream fOut;
+
+				fOut = openFileOutput("wordClass", MODE_PRIVATE);
+				fOut.write(wordClass.getBytes());
+				fOut = openFileOutput("english", MODE_PRIVATE);
+				fOut.write(english.getBytes());
+				fOut = openFileOutput("dovahzul", MODE_PRIVATE);
+				fOut.write(dovahzul.getBytes());
+				fOut = openFileOutput("notes", MODE_PRIVATE);
+				fOut.write(notes.getBytes());
+				fOut = openFileOutput("canon", MODE_PRIVATE);
+				fOut.write(canon.getBytes());
+
+				fOut.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			wordClassArray = wordClass.split("\\;");
 			englishArray = english.split("\\;");
@@ -374,6 +429,33 @@ public class MainMenu extends Portrait {
 
 	public static DictionaryObject[] getDictionary() {
 		return dictionary;
+	}
+
+	private class DownloadToInternalStorage extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			String inputLine = "";
+			try {
+				URL yahoo = new URL(
+						"http://thuum.org/download-dev-dovahzul-web.php");
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						yahoo.openStream()));
+
+				String t = "";
+
+				while ((inputLine = in.readLine()) != null)
+					t = inputLine;
+
+				String[] te = t.split("\\;");
+
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
 	}
 
 }
