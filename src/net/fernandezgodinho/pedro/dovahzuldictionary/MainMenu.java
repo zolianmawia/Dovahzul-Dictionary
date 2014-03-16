@@ -73,74 +73,54 @@ public class MainMenu extends Portrait {
 				&& getBaseContext().getFileStreamPath("dovahzul").exists()
 				&& getBaseContext().getFileStreamPath("notes").exists()
 				&& getBaseContext().getFileStreamPath("canon").exists()) {
-			System.out.println("DOES EXIST");
-
+			System.out.println("Files exist");
 			try {
 				FileInputStream fis;
 
-				byte[] buffer;
 				StringBuffer fileContent;
 
+				int ch;
 				fis = openFileInput("wordClass");
-				buffer = new byte[1024];
 				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
+				while ((ch = fis.read()) != -1)
+					fileContent.append((char) ch);
 				wordClass = fileContent.toString();
 
+				ch = -1;
 				fis = openFileInput("english");
-				buffer = new byte[1024];
 				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
+				while ((ch = fis.read()) != -1)
+					fileContent.append((char) ch);
 				english = fileContent.toString();
 
+				ch = -1;
 				fis = openFileInput("dovahzul");
-				buffer = new byte[1024];
 				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
+				while ((ch = fis.read()) != -1)
+					fileContent.append((char) ch);
 				dovahzul = fileContent.toString();
 
-				fis = openFileInput("wordClass");
-				buffer = new byte[1024];
-				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
-				wordClass = fileContent.toString();
-
+				ch = -1;
 				fis = openFileInput("notes");
-				buffer = new byte[1024];
 				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
+				while ((ch = fis.read()) != -1)
+					fileContent.append((char) ch);
 				notes = fileContent.toString();
 
+				ch = -1;
 				fis = openFileInput("canon");
-				buffer = new byte[1024];
 				fileContent = new StringBuffer("");
-				while (fis.read(buffer) != -1) {
-					fileContent.append(new String(buffer));
-				}
+				while ((ch = fis.read()) != -1)
+					fileContent.append((char) ch);
 				canon = fileContent.toString();
+
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			wordClassArray = wordClass.split("\\;");
-			englishArray = english.split("\\;");
-			dovahzulArray = dovahzul.split("\\;");
-			notesArray = notes.split("\\@");
-			canonArray = canon.split("\\;");
 		} else {
-			System.out.println("DOES NOT EXIST");
+			System.out.println("Files don't exist.");
 			is = getResources().openRawResource(R.raw.english);
 			english = convertStreamToString(is);
 
@@ -176,19 +156,21 @@ public class MainMenu extends Portrait {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			wordClassArray = wordClass.split("\\;");
-			englishArray = english.split("\\;");
-			dovahzulArray = dovahzul.split("\\;");
-			notesArray = notes.split("\\@");
-			canonArray = canon.split("\\;");
 		}
+
+		new DownloadToInternalStorage().execute(getApplicationContext());
+
+		wordClassArray = wordClass.split("\\;");
+		englishArray = english.split("\\;");
+		dovahzulArray = dovahzul.split("\\;");
+		notesArray = notes.split("\\@");
+		canonArray = canon.split("\\;");
 
 		dictionary = new DictionaryObject[englishArray.length];
 		for (int i = 0; i < dictionary.length; i++) {
 			dictionary[i] = new DictionaryObject(englishArray[i],
-					dovahzulArray[i], canonArray[i], wordClassArray[i],
-					notesArray[i]);
+												 dovahzulArray[i], canonArray[i], wordClassArray[i],
+												 notesArray[i]);
 		}
 
 		super.onCreate(savedInstanceState);
@@ -384,7 +366,6 @@ public class MainMenu extends Portrait {
 		}
 		File file = new File(extStore.getAbsolutePath()
 				+ "/Dovahzul_Dictionary/" + fileName);
-		System.out.println("file: " + file.toString());
 		DownloadManager.Request request = new DownloadManager.Request(
 				Uri.parse(url));
 		request.setDescription("Downloading Text Files...");
@@ -395,16 +376,12 @@ public class MainMenu extends Portrait {
 		}
 		request.setDestinationInExternalPublicDir("/Dovahzul_Dictionary",
 				fileName);
-		System.out.println("Destination: " + "/Dovahzul_Dictionary" + fileName);
 		DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
 		if (file.exists()) {
 			file.delete();
-			System.out.println("Exists");
 		} else {
-			System.out.println("Does not exist");
 		}
 		manager.enqueue(request);
-		System.out.println("Request sent.");
 	}
 
 	public static String[] getEnglishArray() {
@@ -431,31 +408,97 @@ public class MainMenu extends Portrait {
 		return dictionary;
 	}
 
-	private class DownloadToInternalStorage extends AsyncTask<Void, Void, Void> {
+	private class DownloadToInternalStorage extends
+			AsyncTask<Context, String, String> {
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
-			String inputLine = "";
-			try {
-				URL yahoo = new URL(
-						"http://thuum.org/download-dev-dovahzul-web.php");
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						yahoo.openStream()));
+		protected String doInBackground(Context... arg0) {
+			System.out.println("Called doInBackground");
+			if (isNetworkConnected()) {
+				System.out.println("Network is available");
+				try {
+					URL dovahzulURL = new URL(
+							"http://thuum.org/download-dev-dovahzul-web.php");
+					URL englishURL = new URL(
+							"http://thuum.org/download-dev-english-web.php ");
+					URL canonURL = new URL(
+							"http://thuum.org/download-dev-canon-web.php ");
+					URL wordClassURL = new URL(
+							"http://thuum.org/download-dev-class-web.php ");
+					URL notesURL = new URL(
+							"http://thuum.org/download-dev-notes-web.php");
+					FileOutputStream fOut;
+					String t = "";
+					String inputLine = "";
+					StringBuilder result;
+					BufferedReader in;
 
-				String t = "";
+					System.out.println("Assigned URLS");
 
-				while ((inputLine = in.readLine()) != null)
-					t = inputLine;
+					in = new BufferedReader(new InputStreamReader(
+							dovahzulURL.openStream()));
+					result = new StringBuilder();
+					inputLine = "";
+					while ((inputLine = in.readLine()) != null) {
+						result.append(inputLine);
+					}
+					fOut = openFileOutput("dovahzul", MODE_PRIVATE);
+					fOut.write(result.toString().getBytes());
+					
+					
+					in = new BufferedReader(new InputStreamReader(
+												englishURL.openStream()));
+					result = new StringBuilder();
+					inputLine = "";
+					while ((inputLine = in.readLine()) != null) {
+						result.append(inputLine);
+					}
+					fOut = openFileOutput("english", MODE_PRIVATE);
+					fOut.write(result.toString().getBytes());
+					
+					
+					in = new BufferedReader(new InputStreamReader(
+												notesURL.openStream()));
+					result = new StringBuilder();
+					inputLine = "";
+					while ((inputLine = in.readLine()) != null) {
+						result.append(inputLine);
+					}
+					fOut = openFileOutput("notes", MODE_PRIVATE);
+					fOut.write(result.toString().getBytes());
 
-				String[] te = t.split("\\;");
+					
+					in = new BufferedReader(new InputStreamReader(
+												canonURL.openStream()));
+					result = new StringBuilder();
+					inputLine = "";
+					while ((inputLine = in.readLine()) != null) {
+						result.append(inputLine);
+					}
+					fOut = openFileOutput("canon", MODE_PRIVATE);
+					fOut.write(result.toString().getBytes());
+					
+					
+					in = new BufferedReader(new InputStreamReader(
+												wordClassURL.openStream()));
+					result = new StringBuilder();
+					inputLine = "";
+					while ((inputLine = in.readLine()) != null) {
+						result.append(inputLine);
+					}
+					fOut = openFileOutput("wordClass", MODE_PRIVATE);
+					fOut.write(result.toString().getBytes());
 
-				in.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+
+					fOut.close();
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("Network isn't available");
 			}
-
 			return null;
 		}
 	}
-
 }
